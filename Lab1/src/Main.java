@@ -17,6 +17,13 @@ public class Main {
         ivanAccount.deposit(500);
         ivanAccount.withdraw(200);
 
-        System.out.println("Баланс Ивана: " + ivanAccount.getBalance());
+        Customer petr = new Customer("Пётр Иванов", "4321");
+        bank.addCustomer(petr);
+        BankAccount petrAccount = bank.openAccount(petr, 1000);
+
+        petrAccount.deposit(800);
+        petrAccount.withdraw(333);
+
+        bank.printAllCustomers();
     }
 }
