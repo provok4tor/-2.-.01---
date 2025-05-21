@@ -20,5 +20,11 @@ public class Bank {
         return account;
     }
 
+    public void printAllCustomers() {
+        System.out.println("Список клиентов:");
+        customers.forEach(c ->
+                System.out.println(c.getName() + " (ID: " + c.getPassportId() + ")"));
+    }
+
     // Дополнительные методы можно добавить позже
 }
