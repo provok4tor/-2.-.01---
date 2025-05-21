@@ -7,7 +7,10 @@
  * - Переводы между счетами
  */
 public class Main {
+    private static final String VERSION = "1.0.0";
+
     public static void main(String[] args) {
+        System.out.println("Bank System v" + VERSION);
         Bank bank = new Bank("Альфа-Банк");
 
         Customer ivan = new Customer("Иван Петров", "1234");
