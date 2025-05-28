@@ -19,7 +19,15 @@ public class BankAccount {
         if (amount > 0 && balance >= amount) balance -= amount;
     }
 
-    public int getAccountNumber() { return accountNumber; }
-    public double getBalance() { return balance; }
-    public Customer getOwner() { return owner; }
+    public int getAccountNumber() { 
+        return accountNumber; 
+    }
+    
+    public double getBalance() { 
+        return balance; 
+    }
+    
+    public Customer getOwner() { 
+        return owner; 
+    }
 }
