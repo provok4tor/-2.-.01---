@@ -33,47 +33,50 @@ public final class Bank {
     /**
      * Конструктор класса Bank.
      *
-     * @param name Название банка.
+     * @param nameParam Название банка.
      */
-    public Bank(final String name) {
-        this.name = name;
-        LOGGER.log(Level.INFO, "Bank created: {0}", name);
+    public Bank(final String nameParam) {
+        this.name = nameParam;
+        LOGGER.log(Level.INFO, "Bank created: {0}", nameParam);
     }
 
     /**
      * Добавляет клиента в банк.
      *
-     * @param customer Клиент для добавления.
+     * @param customerParam Клиент для добавления.
      */
-    public void addCustomer(final Customer customer) {
-        customers.add(customer);
-        LOGGER.log(Level.INFO, "Customer added: {0}", customer.getName());
+    public void addCustomer(final Customer customerParam) {
+        customers.add(customerParam);
+        LOGGER.log(Level.INFO, "Customer added: {0}", customerParam.getName());
     }
 
     /**
      * Открывает новый банковский счёт для клиента.
      *
-     * @param customer       Клиент, для которого открывается счёт.
-     * @param initialBalance Начальный баланс счёта.
+     * @param customerParam       Клиент, для которого открывается счёт.
+     * @param initialBalanceParam Начальный баланс счёта.
      * @return Созданный банковский счёт.
      */
-    public BankAccount openAccount(final Customer customer, final double initialBalance) {
-        final BankAccount account = new BankAccount(customer, initialBalance);
+    public BankAccount openAccount(final Customer customerParam, final double initialBalanceParam) {
+        final BankAccount account = new BankAccount(customerParam, initialBalanceParam);
         accounts.add(account);
-        LOGGER.log(Level.INFO, "Account opened: {0} for {1}",
-                new Object[]{account.getAccountNumber(), customer.getName()});
+        LOGGER.log(
+            Level.INFO,
+            "Account opened: {0} for {1}",
+            new Object[]{account.getAccountNumber(), customerParam.getName()}
+        );
         return account;
     }
 
     /**
      * Находит клиента по идентификатору паспорта.
      *
-     * @param passportId Идентификатор паспорта клиента.
+     * @param passportIdParam Идентификатор паспорта клиента.
      * @return Клиент, если найден, иначе null.
      */
-    public Customer findCustomer(final String passportId) {
+    public Customer findCustomer(final String passportIdParam) {
         return customers.stream()
-                .filter(c -> c.getPassportId().equals(passportId))
+                .filter(c -> c.getPassportId().equals(passportIdParam))
                 .findFirst()
                 .orElse(null);
     }
@@ -81,12 +84,12 @@ public final class Bank {
     /**
      * Возвращает список банковских счетов клиента.
      *
-     * @param customer Клиент, чьи счета нужно найти.
+     * @param customerParam Клиент, чьи счета нужно найти.
      * @return Список банковских счетов клиента.
      */
-    public List<BankAccount> getCustomerAccounts(final Customer customer) {
+    public List<BankAccount> getCustomerAccounts(final Customer customerParam) {
         return accounts.stream()
-                .filter(a -> a.getOwner().equals(customer))
+                .filter(a -> a.getOwner().equals(customerParam))
                 .collect(Collectors.toList());
     }
 }
