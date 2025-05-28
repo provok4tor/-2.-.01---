@@ -57,8 +57,10 @@ public final class Bank {
      * @param initialBalanceParam Начальный баланс счёта.
      * @return Созданный банковский счёт.
      */
-    public BankAccount openAccount(final Customer customerParam, final double initialBalanceParam) {
-        final BankAccount account = new BankAccount(customerParam, initialBalanceParam);
+    public BankAccount openAccount(final Customer customerParam,
+                                   final double initialBalanceParam) {
+        final BankAccount account = new BankAccount(customerParam,
+                                                    initialBalanceParam);
         accounts.add(account);
         LOGGER.log(
             Level.INFO,
