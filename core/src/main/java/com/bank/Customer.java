@@ -1,4 +1,4 @@
-package com.bank;
+package main.java.com.bank;
 
 /**
  * Класс, представляющий клиента банка.
