@@ -30,7 +30,8 @@ public final class BankAccount {
      * @param ownerParam       Владелец счета.
      * @param initialBalanceParam Начальный баланс счета.
      */
-    public BankAccount(final Customer ownerParam, final double initialBalanceParam) {
+    public BankAccount(final Customer ownerParam,
+                       final double initialBalanceParam) {
         this.accountNumber = nextAccountNumber++;
         this.owner = ownerParam;
         this.balance = initialBalanceParam;
