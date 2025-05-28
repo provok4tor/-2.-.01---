@@ -28,14 +28,17 @@ public final class Main {
 
         double initialBalance = 1000.0;
         BankAccount account = bank.openAccount(customer, initialBalance);
-        ConsoleHelper.printMessage("Счет открыт: " + account.getAccountNumber());
+        ConsoleHelper.printMessage("Счет открыт: "
+                                   + account.getAccountNumber());
 
         double depositAmount = 500.0;
         account.deposit(depositAmount);
-        ConsoleHelper.printMessage("Баланс после пополнения: " + account.getBalance());
+        ConsoleHelper.printMessage("Баланс после пополнения: "
+                                   + account.getBalance());
 
         double withdrawAmount = 200.0;
         account.withdraw(withdrawAmount);
-        ConsoleHelper.printMessage("Баланс после снятия: " + account.getBalance());
+        ConsoleHelper.printMessage("Баланс после снятия: "
+                                   + account.getBalance());
     }
 }
