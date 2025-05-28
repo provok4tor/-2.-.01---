@@ -1,18 +1,11 @@
 package test.java.com.bank;
 
-import main.java.com.bank.Bank;
-import main.java.com.bank.BankAccount;
-import main.java.com.bank.Customer;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.mockito.Mockito;
-import org.mockito.Mockito.*;
-
-import java.util.List;
+import org.mockito.MockitoAnnotations;
 
 public class BankAccountTest {
     private BankAccount account;
