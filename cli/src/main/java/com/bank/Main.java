@@ -6,7 +6,8 @@ package main.java.com.bank;
 public final class Main {
 
     /**
-     * Приватный конструктор для предотвращения создания экземпляров утилитарного класса.
+     * Приватный конструктор для предотвращения
+     * создания экземпляров утилитарного класса.
      */
     private Main() {
         throw new UnsupportedOperationException("Utility class");
