@@ -13,7 +13,7 @@ public final class Bank {
     /**
      * Логгер для класса Bank.
      */
-    private static final Logger logger = Logger.getLogger(Bank.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Bank.class.getName());
 
     /**
      * Название банка.
@@ -37,7 +37,7 @@ public final class Bank {
      */
     public Bank(final String name) {
         this.name = name;
-        logger.log(Level.INFO, "Bank created: {0}", name);
+        LOGGER.log(Level.INFO, "Bank created: {0}", name);
     }
 
     /**
@@ -47,7 +47,7 @@ public final class Bank {
      */
     public void addCustomer(final Customer customer) {
         customers.add(customer);
-        logger.log(Level.INFO, "Customer added: {0}", customer.getName());
+        LOGGER.log(Level.INFO, "Customer added: {0}", customer.getName());
     }
 
     /**
@@ -60,7 +60,7 @@ public final class Bank {
     public BankAccount openAccount(final Customer customer, final double initialBalance) {
         final BankAccount account = new BankAccount(customer, initialBalance);
         accounts.add(account);
-        logger.log(Level.INFO, "Account opened: {0} for {1}",
+        LOGGER.log(Level.INFO, "Account opened: {0} for {1}",
                 new Object[]{account.getAccountNumber(), customer.getName()});
         return account;
     }
