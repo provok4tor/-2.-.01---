@@ -29,13 +29,13 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.13.0</version>
+            <version>4.11.2</version> <!-- Используем существующую версию -->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>4.13.0</version>
+            <version>4.11.2</version> <!-- Используем существующую версию -->
             <scope>test</scope>
         </dependency>
     </dependencies>
