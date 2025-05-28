@@ -9,6 +9,11 @@ public class Customer {
         this.passportId = passportId;
     }
 
-    public String getName() { return name; }
-    public String getPassportId() { return passportId; }
+    public String getName() {
+        return name; 
+    }
+    
+    public String getPassportId() { 
+        return passportId; 
+    }
 }
