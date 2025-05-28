@@ -1,18 +1,22 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+        jdk 'JDK11'
+    }
 
     stages {
         // Шаг 1: Получение кода из Git
         stage('Checkout') {
             steps {
-                git branch: 'feature/4', url: 'https://github.com/ваш-репозиторий.git'
+                git branch: 'feature/4', url: 'https://github.com/provok4tor/-2.-.01---.git'
             }
         }
 
-        // Шаг 2: Компиляция
-        stage('Build') {
+        // Шаг 2: Компиляция кода
+        stage('Compile') {
             steps {
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
@@ -22,7 +26,7 @@ pipeline {
                 branch 'feature/*'
             }
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
@@ -32,35 +36,39 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                sh 'mvn checkstyle:check' // Или PMD/SpotBugs
+                bat 'mvn checkstyle:check'
             }
         }
 
         // Шаг 5: Измерение покрытия
         stage('Coverage') {
             steps {
-                sh 'mvn jacoco:report'
+                bat 'mvn jacoco:report'
             }
         }
 
-        // Шаг 6: Установка в локальный репозиторий
+        // Шаг 6: Установка в локальный репозиторий (только при успехе)
         stage('Install') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
-                sh 'mvn install -DskipTests'
+                bat 'mvn install -DskipTests'
             }
         }
 
         // Шаг 7: Проверка покрытия (минимум 60%)
         stage('Coverage Check') {
             steps {
-                sh 'mvn jacoco:check'
+                bat 'mvn jacoco:check'
             }
         }
 
         // Шаг 8: Публикация артефактов
         stage('Publish') {
             steps {
-                sh 'cp aggregator/target/*.jar /путь/к/папке/артефактов'
+                bat 'if not exist "C:\\ArtifactsForLab5" mkdir "C:\\ArtifactsForLab5"'
+                bat 'copy /Y "aggregator\\target\\*.jar" "C:\\ArtifactsForLab5\\"'
             }
         }
     }
@@ -68,6 +76,12 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            junit '**/target/surefire-reports/*.xml'  // Публикация отчетов тестов
+        }
+        failure {
+            emailext body: 'Сборка ${BUILD_URL} упала!',
+                     subject: 'CI/CD Failure',
+                     to: 'team@example.com'
         }
     }
 }
