@@ -1,33 +1,86 @@
 package main.java.com.bank;
-public class BankAccount {
+/**
+ * Класс, представляющий банковский счет.
+ */
+public final class BankAccount {
+    /**
+     * Статическое поле для генерации уникального номера счета.
+     */
     private static int nextAccountNumber = 1;
+
+    /**
+     * Номер счета.
+     */
     private final int accountNumber;
+
+    /**
+     * Баланс счета.
+     */
     private double balance;
+
+    /**
+     * Владелец счета.
+     */
     private final Customer owner;
 
-    public BankAccount(Customer owner, double initialBalance) {
+    /**
+     * Конструктор класса BankAccount.
+     *
+     * @param ownerParam       Владелец счета.
+     * @param initialBalanceParam Начальный баланс счета.
+     */
+    public BankAccount(final Customer ownerParam, final double initialBalanceParam) {
         this.accountNumber = nextAccountNumber++;
-        this.owner = owner;
-        this.balance = initialBalance;
+        this.owner = ownerParam;
+        this.balance = initialBalanceParam;
     }
 
-    public void deposit(double amount) {
-        if (amount > 0) balance += amount;
+    /**
+     * Пополнение счета на указанную сумму.
+     *
+     * @param amountParam Сумма для пополнения.
+     */
+    public void deposit(final double amountParam) {
+        if (amountParam > 0) {
+            balance += amountParam;
+        }
     }
 
-    public void withdraw(double amount) {
-        if (amount > 0 && balance >= amount) balance -= amount;
+    /**
+     * Списание со счета указанной суммы.
+     *
+     * @param amountParam Сумма для списания.
+     */
+    public void withdraw(final double amountParam) {
+        if (amountParam > 0 && balance >= amountParam) {
+            balance -= amountParam;
+        }
     }
 
-    public int getAccountNumber() { 
-        return accountNumber; 
+    /**
+     * Возвращает номер счета.
+     *
+     * @return Номер счета.
+     */
+    public int getAccountNumber() {
+        return accountNumber;
     }
-    
-    public double getBalance() { 
-        return balance; 
+
+    /**
+     * Возвращает текущий баланс счета.
+     *
+     * @return Баланс счета.
+     */
+    public double getBalance() {
+        return balance;
     }
-    
-    public Customer getOwner() { 
-        return owner; 
+
+    /**
+     * Возвращает владельца счета.
+     *
+     * @return Владелец счета.
+     */
+    public Customer getOwner() {
+        return owner;
     }
 }
