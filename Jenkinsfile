@@ -21,15 +21,19 @@ pipeline {
         }
 
         // Шаг 3: Запуск тестов (только для feature-веток)
-        stage('Run Tests') {
-            when {
-                expression { env.BRANCH_NAME.startsWith("feature/") }
-            }
-            steps {
-                bat 'mvn test'
-                junit testResults: '**/surefire-reports/*.xml'
-            }
+       stage('Run Tests') {
+    when {
+        expression {
+            def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
+            echo "Checking branch: ${branch}" // Логирование для отладки
+            return branch.startsWith("feature/")
         }
+    }
+    steps {
+        bat 'mvn test'
+        junit '**/surefire-reports/*.xml'
+    }
+}
 
         // Шаг 4: Статический анализ (только для dev)
         stage('Static Analysis') {
