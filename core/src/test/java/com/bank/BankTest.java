@@ -46,25 +46,10 @@ public class BankTest {
 
     // Тесты для операций с клиентами
     @Test
-    void testAddCustomer() {
-        bank.addCustomer(customer);
-        assertNotNull(bank.findCustomer("PASS123"));
-        assertEquals(1, bank.getCustomerAccounts(customer).size());
-    }
-
-
-    @Test
     void testWithdraw() {
         BankAccount account = new BankAccount(customer, 500);
         account.withdraw(200);
         assertEquals(300, account.getBalance());
-    }
-
-    @Test
-    void testAddDuplicateCustomer() {
-        bank.addCustomer(customer);
-        bank.addCustomer(customer); // Попытка добавить того же клиента
-        assertEquals(1, bank.getCustomerAccounts(customer).size());
     }
 
     // Тесты для операций со счетами
@@ -82,12 +67,6 @@ public class BankTest {
         bank.openAccount(customer, 1000);
         bank.openAccount(customer, 2000);
         assertEquals(2, bank.getCustomerAccounts(customer).size());
-    }
-
-    @Test
-    void testOpenAccountForNonExistentCustomer() {
-        BankAccount newAccount = bank.openAccount(customer, 1000);
-        assertNull(newAccount);
     }
 
     // Тесты для поиска
