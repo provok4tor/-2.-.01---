@@ -22,14 +22,24 @@ pipeline {
 
         // Шаг 3: Запуск тестов (только для feature-веток)
         stage('Test') {
-            when {
-                expression { env.BRANCH_NAME.startsWith("feature/") }
-            }
-            steps {
-                bat 'mvn test'
-                junit testResults: '**/surefire-reports/*.xml' // Проверка наличия отчетов
+    when {
+        // Проверяем, что BRANCH_NAME существует и начинается с "feature/"
+        expression { 
+            return env.BRANCH_NAME != null && env.BRANCH_NAME.startsWith("feature/") 
+        }
+    }
+    steps {
+        script {
+            echo "Running tests for branch: ${env.BRANCH_NAME}"
+            try {
+                bat 'mvn test' 
+                junit '**/surefire-reports/*.xml' // Публикация отчетов JUnit
+            } catch (Exception e) {
+                error "Tests failed: ${e.message}"
             }
         }
+    }
+}
 
         // Шаг 4: Статический анализ (только для dev)
         stage('Static Analysis') {
