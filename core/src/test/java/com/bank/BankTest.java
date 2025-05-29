@@ -1,4 +1,4 @@
-package test.java.com.bank;
+package main.java.com.bank;
 
 import main.java.com.bank.Bank;
 import main.java.com.bank.BankAccount;
