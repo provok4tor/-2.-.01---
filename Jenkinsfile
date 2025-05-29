@@ -9,7 +9,7 @@ pipeline {
         // Шаг 1: Получение кода из Git
         stage('Checkout') {
             steps {
-                git branch: 'feature/4', url: 'https://github.com/provok4tor/-2.-.01---.git '
+                git branch: 'feature/4', url: 'https://github.com/provok4tor/-2.-.01---.git' 
             }
         }
 
@@ -21,34 +21,35 @@ pipeline {
         }
 
         // Шаг 3: Запуск тестов (только для feature-веток)
-       stage('Run Tests') {
-    when {
-        expression {
-            def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
-            echo "Checking branch: ${branch}" // Логирование для отладки
-            return branch.startsWith("feature/")
+        stage('Run Tests') {
+            when {
+                expression {
+                    def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
+                    echo "Checking branch: ${branch}" // Логирование для отладки
+                    return branch.startsWith("feature/")
+                }
+            }
+            steps {
+                bat 'mvn test'
+                junit '**/target/surefire-reports/*.xml'
+            }
         }
-    }
-    steps {
-        bat 'mvn test'
-        junit '**/surefire-reports/*.xml'
-    }
-}
 
         // Шаг 4: Статический анализ (только для dev)
         stage('Static Analysis') {
-         when {
-        expression {
-            def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
-            echo "Checking branch: ${branch}" // Логирование для отладки
-            return branch == "develop"
+            when {
+                expression {
+                    def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
+                    echo "Checking branch: ${branch}" // Логирование для отладки
+                    return branch == "develop"
+                }
+            }
+            steps {
+                bat 'mvn checkstyle:check'
+            }
         }
-    }
-    steps {
-    bat 'mvn checkstyle:check'
-    }
-}
 
+        // Шаг 5: Генерация отчёта о покрытии кода
         stage('Code Coverage Report') {
             steps {
                 bat 'mvn jacoco:report'
@@ -58,14 +59,14 @@ pipeline {
             }
         }
 
-        // Шаг 5: Измерение покрытия
+        // Шаг 6: Измерение покрытия
         stage('Coverage') {
             steps {
                 bat 'mvn jacoco:report'
             }
         }
 
-        // Шаг 6: Установка в локальный репозиторий (только при успехе)
+        // Шаг 7: Установка в локальный репозиторий (только при успехе)
         stage('Install') {
             when {
                 expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
@@ -75,14 +76,14 @@ pipeline {
             }
         }
 
-        // Шаг 7: Проверка покрытия (минимум 60%)
+        // Шаг 8: Проверка покрытия (минимум 60%)
         stage('Coverage Check') {
             steps {
                 bat 'mvn jacoco:check'
             }
         }
 
-        // Шаг 8: Публикация артефактов
+        // Шаг 9: Публикация артефактов
         stage('Publish') {
             steps {
                 bat 'if not exist "C:\\ArtifactsForLab5" mkdir "C:\\ArtifactsForLab5"'
@@ -91,7 +92,7 @@ pipeline {
         }
     }
 
-      post {
+    post {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             script {
