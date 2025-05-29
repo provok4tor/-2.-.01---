@@ -37,13 +37,17 @@ pipeline {
 
         // Шаг 4: Статический анализ (только для dev)
         stage('Static Analysis') {
-            when {
-                expression { env.BRANCH_NAME == "develop" }
-            }
-            steps {
-                bat 'mvn checkstyle:check'
-            }
+         when {
+        expression {
+            def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
+            echo "Checking branch: ${branch}" // Логирование для отладки
+            return branch == "develop"
         }
+    }
+    steps {
+    bat 'mvn checkstyle:check'
+    }
+}
 
         stage('Code Coverage Report') {
             steps {
