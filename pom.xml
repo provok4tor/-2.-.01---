@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <!-- Добавляем свойства для JaCoCo -->
+        <!-- Свойство для минимального покрытия (можно переопределить в модулях) -->
         <jacoco.minimum.instruction.ratio>0.60</jacoco.minimum.instruction.ratio>
     </properties>
 
@@ -45,22 +45,22 @@
                 </configuration>
             </plugin>
 
-            <!-- Jacoco Maven Plugin -->
-               <plugin>
+            <!-- Jacoco Maven Plugin (ТОЛЬКО prepare-agent и report) -->
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.10</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>prepare-agent</goal>
+                            <goal>prepare-agent</goal> <!-- Агент для сбора покрытия -->
                         </goals>
                     </execution>
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
                         <goals>
-                            <goal>report</goal>
+                            <goal>report</goal> <!-- Генерация отчета -->
                         </goals>
                     </execution>
                 </executions>
@@ -68,24 +68,24 @@
 
             <!-- Checkstyle Maven Plugin -->
             <plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.10</version>
-    <executions>
-        <execution>
-            <goals>
-                <goal>prepare-agent</goal> <!-- Готовит агент для сбора покрытия -->
-            </goals>
-        </execution>
-        <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-                <goal>report</goal> <!-- Генерирует HTML-отчет -->
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>10.12.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
