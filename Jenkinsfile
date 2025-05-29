@@ -91,10 +91,21 @@ pipeline {
         }
     }
 
-    post {
+      post {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            junit '**/target/surefire-reports/*.xml'  // Публикация отчетов тестов
+            script {
+                def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
+                echo "Post-Condition Branch: ${branch}" // Логирование для отладки
+                if (branch.startsWith("feature/")) {
+                    junit '**/target/surefire-reports/*.xml'  // Публикация отчетов тестов
+                }
+            }
+        }
+        failure {
+            emailext body: 'Сборка ${BUILD_URL} упала!',
+                     subject: 'CI/CD Failure',
+                     to: 'team@example.com'
         }
     }
 }
