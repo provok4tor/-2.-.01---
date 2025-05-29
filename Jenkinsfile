@@ -38,10 +38,19 @@ pipeline {
         // Шаг 4: Статический анализ (только для dev)
         stage('Static Analysis') {
             when {
-                branch 'dev'
+                expression { env.BRANCH_NAME == "develop" }
             }
             steps {
                 bat 'mvn checkstyle:check'
+            }
+        }
+
+        stage('Code Coverage Report') {
+            steps {
+                bat 'mvn jacoco:report'
+                jacoco execPattern: '**/target/jacoco.exec'
+                jacoco classPattern: '**/target/classes'
+                jacoco sourcePattern: '**/src/main/java'
             }
         }
 
