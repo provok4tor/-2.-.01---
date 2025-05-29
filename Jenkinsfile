@@ -38,7 +38,7 @@ pipeline {
         // Шаг 4: Статический анализ (только для dev)
         stage('Static Analysis') {
             when {
-                branch 'dev'
+                branch 'develop'
             }
             steps {
                 bat 'mvn checkstyle:check'
