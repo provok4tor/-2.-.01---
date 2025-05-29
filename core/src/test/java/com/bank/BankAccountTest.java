@@ -1,4 +1,4 @@
-package test.java.com.bank;
+package main.java.com.bank;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
