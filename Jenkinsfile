@@ -21,7 +21,7 @@ pipeline {
         }
 
         // Шаг 3: Запуск тестов (только для feature-веток)
-        stage('Run Tests') {
+       stage('Run Tests') {
     when {
         expression {
             def branch = (env.GIT_BRANCH ?: env.BRANCH_NAME ?: "").replaceAll("^origin/", "")
@@ -38,10 +38,19 @@ pipeline {
         // Шаг 4: Статический анализ (только для dev)
         stage('Static Analysis') {
             when {
-                branch 'develop'
+                expression { env.BRANCH_NAME == "develop" }
             }
             steps {
                 bat 'mvn checkstyle:check'
+            }
+        }
+
+        stage('Code Coverage Report') {
+            steps {
+                bat 'mvn jacoco:report'
+                jacoco execPattern: '**/target/jacoco.exec'
+                jacoco classPattern: '**/target/classes'
+                jacoco sourcePattern: '**/src/main/java'
             }
         }
 
