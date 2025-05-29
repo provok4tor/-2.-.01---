@@ -13,7 +13,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <!-- Свойство для минимального покрытия (можно переопределить в модулях) -->
-        <jacoco.minimum.instruction.ratio>0.00</jacoco.minimum.instruction.ratio>
+        <jacoco.minimum.instruction.ratio>0.00%</jacoco.minimum.instruction.ratio>
     </properties>
 
     <modules>
