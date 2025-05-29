@@ -23,11 +23,11 @@ pipeline {
         // Шаг 3: Запуск тестов (только для feature-веток)
         stage('Test') {
             when {
-                branch 'feature/4'  // Убедитесь, что это соответствует вашей ветке
+                expression { env.BRANCH_NAME.startsWith("feature/") }
             }
             steps {
                 bat 'mvn test'
-                bat 'dir /s /b core\\target\\surefire-reports\\'  // Проверка наличия отчетов
+                junit testResults: '**/surefire-reports/*.xml' // Проверка наличия отчетов
             }
         }
 
