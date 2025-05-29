@@ -9,7 +9,7 @@ pipeline {
         // Шаг 1: Получение кода из Git
         stage('Checkout') {
             steps {
-                git branch: 'feature/4', url: 'https://github.com/provok4tor/-2.-.01---.git'
+                git branch: 'feature/4', url: 'https://github.com/provok4tor/-2.-.01---.git '
             }
         }
 
@@ -23,10 +23,11 @@ pipeline {
         // Шаг 3: Запуск тестов (только для feature-веток)
         stage('Test') {
             when {
-                branch 'feature/*'
+                branch 'feature/4'  // Убедитесь, что это соответствует вашей ветке
             }
             steps {
                 bat 'mvn test'
+                bat 'dir /s /b core\\target\\surefire-reports\\'  // Проверка наличия отчетов
             }
         }
 
@@ -77,11 +78,6 @@ pipeline {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             junit '**/target/surefire-reports/*.xml'  // Публикация отчетов тестов
-        }
-        failure {
-            emailext body: 'Сборка ${BUILD_URL} упала!',
-                     subject: 'CI/CD Failure',
-                     to: 'team@example.com'
         }
     }
 }
