@@ -17,9 +17,20 @@ public class BankAccountTest {
     }
 
     @Test
-    public void testDeposit() {
+    public void testDeposit0() {
+        account.deposit(0);
+        assertNotNull(account.getBalance());
+    }
+    @Test
+    public void testDeposit1() {
         account.deposit(500.0);
         assertEquals(1500.0, account.getBalance());
+    }
+
+    @Test
+    public void testDeposit2() {
+        account.deposit(200.0);
+        assertNotEquals(1800.0, account.getBalance());
     }
 
     @Test
