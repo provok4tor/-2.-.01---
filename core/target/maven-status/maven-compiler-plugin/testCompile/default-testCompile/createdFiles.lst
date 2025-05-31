@@ -1,1 +1,3 @@
-test\java\com\bank\BankTest.class
+com\bank\BankAccountTest.class
+com\bank\BankTest.class
+com\bank\CustomerTest.class

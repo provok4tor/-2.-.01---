@@ -1,3 +1,4 @@
-main\java\com\bank\Customer.class
-main\java\com\bank\Bank.class
-main\java\com\bank\BankAccount.class
+com\bank\Customer.class
+com\bank\package-info.class
+com\bank\Bank.class
+com\bank\BankAccount.class
