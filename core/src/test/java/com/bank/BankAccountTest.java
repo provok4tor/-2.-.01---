@@ -21,6 +21,13 @@ public class BankAccountTest {
         account.deposit(0);
         assertNotNull(account.getBalance());
     }
+
+    @Test
+    public void testDeposit15() {
+        account.deposit(-15);
+        assertEquals(1000.0, account.getBalance());
+    }
+
     @Test
     public void testDeposit1() {
         account.deposit(500.0);
