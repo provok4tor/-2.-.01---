@@ -84,12 +84,13 @@ pipeline {
         }
 
         // Шаг 9: Публикация артефактов
-        stage('Publish') {
-            steps {
-                bat 'if not exist "C:\\ArtifactsForLab5" mkdir "C:\\ArtifactsForLab5"'
-                bat 'copy /Y "aggregator\\target\\*.jar" "C:\\ArtifactsForLab5\\"'
-            }
-        }
+  stage('Deploy Artifact') {            steps {
+                script {                    def targetDir = "C:\\artifacts\\${env.BRANCH_NAME}"
+                    bat """                        if not exist "${targetDir}" (
+                            mkdir "${targetDir}"                        )
+                        copy /Y "app\\target\\*.jar" "${targetDir}\\"                    """
+                }                archiveArtifacts artifacts: 'app\\target\\*.jar', fingerprint: true
+            }        }
     }
 
     post {
